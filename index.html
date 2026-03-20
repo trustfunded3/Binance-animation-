@@ -8,84 +8,105 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body { background-color: #181a20; color: #eaecef; font-family: 'Inter', sans-serif; }
-        .binance-yellow { background-color: #fcd535; color: #181a20; }
+        .binance-yellow { background-color: #fcd535; color: #0b0e11; }
         .binance-yellow:hover { background-color: #f0c51d; }
-        .input-bg { background-color: #2b2f36; border: 1px solid transparent; }
+        .input-bg { background-color: #2b2f36; border: 1px solid transparent; transition: 0.2s; }
         .input-bg:focus-within { border-color: #fcd535; }
         .hidden { display: none; }
+        .logo-color { fill: #fcd535; }
+        input::-ms-reveal, input::-ms-clear { display: none; } /* Hides default browser eye icon */
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
 
-    <div class="w-full max-w-md p-8 rounded-xl shadow-2xl">
-        <div class="flex flex-col items-center mb-8">
-            <img src="https://bin.bnbstatic.com/static/images/common/favicon.ico" alt="Logo" class="w-12 h-12 mb-4">
-            <h1 id="page-title" class="text-3xl font-bold">Welcome to Binance</h1>
+    <div class="w-full max-w-md p-6">
+        <div class="flex flex-col items-center mb-10">
+            <svg width="48" height="48" viewBox="0 0 24 24" class="logo-color mb-6">
+                <path d="M16.624 13.9202l-4.624 4.624-4.624-4.624 4.624-4.624 4.624 4.624zm4.624-4.624l-4.624 4.624 4.624 4.624 4.624-4.624-4.624-4.624zm-9.248 0L7.376 13.9202l4.624 4.624 4.624-4.624-4.624-4.624zm4.624-4.624L12 9.2962l4.624 4.624 4.624-4.624-4.624-4.624zm-9.248 0L2.752 9.2962l4.624 4.624 4.624-4.624-4.624-4.624zm4.624-4.624L7.376 4.6722l4.624 4.624 4.624-4.624-4.624-4.624z" />
+            </svg>
+            <h1 id="page-title" class="text-3xl font-semibold text-center">Welcome to Binance</h1>
         </div>
 
         <div id="login-form">
-            <div class="mb-4">
-                <label class="block text-sm text-gray-400 mb-1">Email/Phone number</label>
-                <div class="input-bg rounded-md p-3 flex items-center">
-                    <input type="text" placeholder="Email/Phone (without country code)" class="bg-transparent w-full outline-none text-sm">
+            <div class="mb-5">
+                <label class="block text-sm text-gray-400 mb-2">Email/Phone number</label>
+                <div class="input-bg rounded-md p-3">
+                    <input type="text" placeholder="Email/Phone (without country code)" class="bg-transparent w-full outline-none text-sm placeholder-gray-500">
                 </div>
             </div>
 
-            <div class="mb-4">
+            <div class="mb-5">
+                <label class="block text-sm text-gray-400 mb-2">Password</label>
                 <div class="input-bg rounded-md p-3 flex items-center justify-between">
-                    <input type="password" placeholder="Enter password" class="bg-transparent w-full outline-none text-sm">
-                    <i class="fa-regular fa-eye text-gray-500 cursor-pointer"></i>
+                    <input type="password" id="login-password" placeholder="Enter password" class="bg-transparent w-full outline-none text-sm placeholder-gray-500">
+                    <i class="fa-regular fa-eye text-gray-500 cursor-pointer hover:text-gray-300" onclick="togglePassword('login-password', this)"></i>
                 </div>
             </div>
 
-            <div class="flex items-start mb-6">
-                <input type="checkbox" class="mt-1 mr-2 accent-yellow-400">
-                <span class="text-xs text-gray-400">By creating an account, I agree to Binance's <a href="#" class="underline">Privacy Notice</a>.</span>
+            <div class="flex items-start mb-8">
+                <input type="checkbox" class="mt-1 mr-2 accent-yellow-400 w-4 h-4 cursor-pointer">
+                <span class="text-xs text-gray-400 leading-tight">By creating an account, I agree to Binance's <a href="#" class="underline hover:text-gray-200">Privacy Notice</a>.</span>
             </div>
 
-            <button class="binance-yellow w-full py-3 rounded-md font-bold mb-4">Continue</button>
-            <div class="text-center text-gray-500 text-sm mb-4">or</div>
-            <button onclick="toggleForms()" class="w-full border border-gray-600 py-3 rounded-md font-bold hover:bg-gray-800 transition">Sign Up</button>
+            <button class="binance-yellow w-full py-3.5 rounded-md font-bold text-sm mb-4">Continue</button>
+            
+            <div class="relative flex items-center justify-center my-6">
+                <div class="flex-grow border-t border-gray-700"></div>
+                <span class="flex-shrink mx-4 text-gray-500 text-xs">or</span>
+                <div class="flex-grow border-t border-gray-700"></div>
+            </div>
+
+            <button class="w-full border border-gray-700 py-3 rounded-md font-semibold text-sm hover:bg-gray-800 transition flex items-center justify-center gap-2 mb-8">
+                <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" class="w-4 h-4" alt="Google">
+                Continue with Google
+            </button>
+
+            <div class="text-center">
+                <button onclick="toggleView()" class="text-yellow-500 text-sm font-medium hover:underline">Sign up</button>
+                <span class="text-gray-500 text-sm mx-1">or</span>
+                <button class="text-yellow-500 text-sm font-medium hover:underline">Log in</button>
+            </div>
         </div>
 
         <div id="signup-form" class="hidden">
             <div class="mb-4">
                 <div class="input-bg rounded-md p-3 flex items-center">
-                    <i class="fa-solid fa-envelope text-yellow-500 mr-3"></i>
-                    <input type="email" placeholder="Email address" class="bg-transparent w-full outline-none text-sm">
+                    <i class="fa-solid fa-envelope text-yellow-500 mr-3 text-sm"></i>
+                    <input type="email" placeholder="Email address" class="bg-transparent w-full outline-none text-sm placeholder-gray-500">
                 </div>
             </div>
 
             <div class="mb-4">
                 <div class="input-bg rounded-md p-3 flex items-center justify-between">
                     <div class="flex items-center w-full">
-                        <i class="fa-solid fa-lock text-yellow-500 mr-3"></i>
-                        <input type="password" placeholder="Password" class="bg-transparent w-full outline-none text-sm">
+                        <i class="fa-solid fa-lock text-yellow-500 mr-3 text-sm"></i>
+                        <input type="password" id="signup-password" placeholder="Password" class="bg-transparent w-full outline-none text-sm placeholder-gray-500">
                     </div>
-                    <i class="fa-regular fa-eye text-gray-500 cursor-pointer"></i>
+                    <i class="fa-regular fa-eye text-gray-500 cursor-pointer hover:text-gray-300" onclick="togglePassword('signup-password', this)"></i>
                 </div>
             </div>
 
-            <div class="mb-4">
+            <div class="mb-6">
                 <div class="input-bg rounded-md p-3">
-                    <input type="text" placeholder="Referral ID (optional)" class="bg-transparent w-full outline-none text-sm text-gray-400">
+                    <input type="text" placeholder="Referral ID (optional)" class="bg-transparent w-full outline-none text-sm placeholder-gray-500">
                 </div>
             </div>
 
-            <div class="flex items-start mb-6">
-                <input type="checkbox" class="mt-1 mr-2 accent-yellow-400">
-                <span class="text-xs text-gray-400">By creating an account, I agree to Binance's <a href="#" class="text-yellow-500">Terms of Service</a> and <a href="#" class="text-yellow-500">Privacy Notice</a>.</span>
+            <div class="flex items-start mb-8">
+                <input type="checkbox" checked class="mt-1 mr-2 accent-yellow-400 w-4 h-4 cursor-pointer">
+                <span class="text-xs text-gray-400">By creating an account, I agree to Binance's <a href="#" class="text-yellow-500 underline">Terms of Service</a> and <a href="#" class="text-yellow-500 underline">Privacy Notice</a>.</span>
             </div>
 
-            <button class="binance-yellow w-full py-3 rounded-md font-bold mb-4">Create Account</button>
+            <button class="binance-yellow w-full py-3.5 rounded-md font-bold text-sm mb-6">Create Account</button>
             <p class="text-center text-sm text-gray-400">
-                Already have an account? <a href="javascript:void(0)" onclick="toggleForms()" class="text-yellow-500 hover:underline">Log in</a>
+                Already have an account? <a href="javascript:void(0)" onclick="toggleView()" class="text-yellow-500 hover:underline">Log in</a>
             </p>
         </div>
     </div>
 
     <script>
-        function toggleForms() {
+        // Toggle between Login and Sign Up
+        function toggleView() {
             const loginForm = document.getElementById('login-form');
             const signupForm = document.getElementById('signup-form');
             const title = document.getElementById('page-title');
@@ -98,6 +119,21 @@
                 loginForm.classList.add('hidden');
                 signupForm.classList.remove('hidden');
                 title.innerText = "Sign Up to Binance";
+            }
+        }
+
+        // Toggle Password Visibility
+        function togglePassword(inputId, icon) {
+            const passwordInput = document.getElementById(inputId);
+            
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = "password";
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
             }
         }
     </script>
