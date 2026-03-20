@@ -14,7 +14,6 @@
         .input-bg:focus-within { border-color: #fcd535; }
         .hidden { display: none; }
         .logo-color { fill: #fcd535; }
-        input::-ms-reveal, input::-ms-clear { display: none; } /* Hides default browser eye icon */
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
@@ -24,7 +23,7 @@
             <svg width="48" height="48" viewBox="0 0 24 24" class="logo-color mb-6">
                 <path d="M16.624 13.9202l-4.624 4.624-4.624-4.624 4.624-4.624 4.624 4.624zm4.624-4.624l-4.624 4.624 4.624 4.624 4.624-4.624-4.624-4.624zm-9.248 0L7.376 13.9202l4.624 4.624 4.624-4.624-4.624-4.624zm4.624-4.624L12 9.2962l4.624 4.624 4.624-4.624-4.624-4.624zm-9.248 0L2.752 9.2962l4.624 4.624 4.624-4.624-4.624-4.624zm4.624-4.624L7.376 4.6722l4.624 4.624 4.624-4.624-4.624-4.624z" />
             </svg>
-            <h1 id="page-title" class="text-3xl font-semibold text-center">Welcome to Binance</h1>
+            <h1 id="page-title" class="text-3xl font-semibold">Welcome to Binance</h1>
         </div>
 
         <div id="login-form">
@@ -38,8 +37,8 @@
             <div class="mb-5">
                 <label class="block text-sm text-gray-400 mb-2">Password</label>
                 <div class="input-bg rounded-md p-3 flex items-center justify-between">
-                    <input type="password" id="login-password" placeholder="Enter password" class="bg-transparent w-full outline-none text-sm placeholder-gray-500">
-                    <i class="fa-regular fa-eye text-gray-500 cursor-pointer hover:text-gray-300" onclick="togglePassword('login-password', this)"></i>
+                    <input type="password" placeholder="Enter password" class="bg-transparent w-full outline-none text-sm placeholder-gray-500">
+                    <i class="fa-regular fa-eye text-gray-500 cursor-pointer hover:text-gray-300"></i>
                 </div>
             </div>
 
@@ -62,7 +61,7 @@
             </button>
 
             <div class="text-center">
-                <button onclick="toggleView()" class="text-yellow-500 text-sm font-medium hover:underline">Sign up</button>
+                <button onclick="toggleForms()" class="text-yellow-500 text-sm font-medium hover:underline">Sign up</button>
                 <span class="text-gray-500 text-sm mx-1">or</span>
                 <button class="text-yellow-500 text-sm font-medium hover:underline">Log in</button>
             </div>
@@ -80,9 +79,9 @@
                 <div class="input-bg rounded-md p-3 flex items-center justify-between">
                     <div class="flex items-center w-full">
                         <i class="fa-solid fa-lock text-yellow-500 mr-3 text-sm"></i>
-                        <input type="password" id="signup-password" placeholder="Password" class="bg-transparent w-full outline-none text-sm placeholder-gray-500">
+                        <input type="password" placeholder="Password" class="bg-transparent w-full outline-none text-sm placeholder-gray-500">
                     </div>
-                    <i class="fa-regular fa-eye text-gray-500 cursor-pointer hover:text-gray-300" onclick="togglePassword('signup-password', this)"></i>
+                    <i class="fa-regular fa-eye text-gray-500 cursor-pointer"></i>
                 </div>
             </div>
 
@@ -99,14 +98,13 @@
 
             <button class="binance-yellow w-full py-3.5 rounded-md font-bold text-sm mb-6">Create Account</button>
             <p class="text-center text-sm text-gray-400">
-                Already have an account? <a href="javascript:void(0)" onclick="toggleView()" class="text-yellow-500 hover:underline">Log in</a>
+                Already have an account? <a href="javascript:void(0)" onclick="toggleForms()" class="text-yellow-500 hover:underline">Log in</a>
             </p>
         </div>
     </div>
 
     <script>
-        // Toggle between Login and Sign Up
-        function toggleView() {
+        function toggleForms() {
             const loginForm = document.getElementById('login-form');
             const signupForm = document.getElementById('signup-form');
             const title = document.getElementById('page-title');
@@ -119,21 +117,6 @@
                 loginForm.classList.add('hidden');
                 signupForm.classList.remove('hidden');
                 title.innerText = "Sign Up to Binance";
-            }
-        }
-
-        // Toggle Password Visibility
-        function togglePassword(inputId, icon) {
-            const passwordInput = document.getElementById(inputId);
-            
-            if (passwordInput.type === "password") {
-                passwordInput.type = "text";
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = "password";
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
             }
         }
     </script>
