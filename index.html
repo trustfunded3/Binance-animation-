@@ -84,7 +84,7 @@
 
         /* Main Content - Centered Positioning */
         #main-site {
-            position: fixed; /* Fixed to keep it centered regardless of content */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -112,7 +112,6 @@
             font-size: 2.8rem;
             text-align: center;
             margin: 0;
-            padding: 20px;
         }
     </style>
 </head>
@@ -143,11 +142,9 @@
 
     <script>
         window.addEventListener('load', () => {
-            // Loader will disappear after 3.2 seconds total
             setTimeout(() => {
                 document.body.classList.add('hide-loader');
                 document.body.classList.add('show-site');
-                document.body.style.overflow = 'auto';
             }, 3200); 
         });
     </script>
