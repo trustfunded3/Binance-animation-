@@ -17,7 +17,7 @@
             height: 100%;
             background-color: var(--bg-dark);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden; /* Prevent scrolling during animation */
+            overflow: hidden; 
         }
 
         /* Full-screen Loader Container */
@@ -33,6 +33,7 @@
             align-items: center;
             z-index: 9999;
             transition: opacity 0.8s ease-out;
+            background-color: var(--bg-dark);
         }
 
         /* The Logo (Diamond) Animation */
@@ -81,17 +82,29 @@
             }
         }
 
-        /* Main Content (Hidden initially) */
+        /* Main Content - Centered Positioning */
         #main-site {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             opacity: 0;
-            padding: 40px;
             color: white;
-            text-align: center;
             transition: opacity 1s ease-in;
         }
 
         .show-site #main-site { opacity: 1; }
         .hide-loader #loader-wrapper { opacity: 0; pointer-events: none; }
+        
+        h1 {
+            font-size: 3rem;
+            text-align: center;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -117,16 +130,14 @@
 
     <div id="main-site">
         <h1>Welcome to the Platform</h1>
-        <p>Your secure dashboard is ready.</p>
     </div>
 
     <script>
-        // Wait for the animation to finish (approx 3 seconds)
         window.addEventListener('load', () => {
+            // Adjust the timeout (3000ms = 3 seconds) to match your desired total loading time
             setTimeout(() => {
                 document.body.classList.add('hide-loader');
                 document.body.classList.add('show-site');
-                document.body.style.overflow = 'auto'; // Re-enable scrolling
             }, 3000); 
         });
     </script>
