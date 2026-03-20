@@ -586,4 +586,92 @@
         }
         
         function toggleForms() {
-            const loginForm = document.getElementById('
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            const title = document.getElementById('page-title');
+
+            if (loginForm.classList.contains('hidden')) {
+                loginForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+                title.innerText = "Welcome to Binance";
+            } else {
+                loginForm.classList.add('hidden');
+                signupForm.classList.remove('hidden');
+                title.innerText = "Create Account";
+            }
+        }
+        
+        function togglePassword(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = "password";
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+        
+        function showView(viewId) {
+            document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('[id^="nav-"]').forEach(n => { n.classList.remove('nav-item-active'); n.classList.add('text-gray-500'); });
+            
+            document.getElementById('view-' + viewId).classList.add('active');
+            document.getElementById('nav-' + viewId).classList.add('nav-item-active');
+            
+            const exBtn = document.getElementById('btn-exchange');
+            const waBtn = document.getElementById('btn-wallet');
+            
+            if(viewId === 'home') {
+                exBtn.className = "px-5 py-2 text-white bg-[#2b3139] rounded-md shadow-md font-bold";
+                waBtn.className = "px-5 py-2 text-gray-400 font-bold";
+            } else if (viewId === 'wallets') {
+                waBtn.className = "px-5 py-2 text-white bg-[#2b3139] rounded-md shadow-md font-bold";
+                exBtn.className = "px-5 py-2 text-gray-400 font-bold";
+            }
+        }
+
+        async function updateLiveTicker() {
+            try {
+                const res = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbols=["BTCUSDT","BNBUSDT"]');
+                const data = await res.json();
+                data.forEach(coin => {
+                    const idPrefix = coin.symbol === "BTCUSDT" ? 'btc' : 'bnb';
+                    const priceEl = document.getElementById(idPrefix + '-price');
+                    const changeEl = document.getElementById(idPrefix + '-change');
+                    
+                    if(priceEl) priceEl.innerText = parseFloat(coin.lastPrice).toLocaleString(undefined, { minimumFractionDigits: 2 });
+                    if(changeEl) {
+                        const pct = parseFloat(coin.priceChangePercent).toFixed(2);
+                        changeEl.innerText = (pct >= 0 ? '+' : '') + pct + '%';
+                        changeEl.className = pct >= 0 ? "success-green text-[10px] font-bold" : "text-red-500 text-[10px] font-bold";
+                    }
+                });
+            } catch (err) { console.error("Update failed", err); }
+        }
+
+        let isHidden = false;
+        function toggleBalance() {
+            isHidden = !isHidden;
+            document.getElementById('home-main-balance').innerText = isHidden ? "******" : "$12,450.80";
+            document.getElementById('home-eye-icon').setAttribute('data-lucide', isHidden ? 'eye-off' : 'eye');
+            lucide.createIcons();
+        }
+
+        setInterval(updateLiveTicker, 5000);
+        updateLiveTicker();
+        
+        // ========= LOADER TRANSITION: Animation first, THEN login overlay appears =========
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                // Hide loader with fade out
+                document.body.classList.add('hide-loader');
+                // After loader fades, show login overlay
+                setTimeout(() => {
+                    document.getElementById('login-overlay').classList.add('active');
+                }, 800);
+            }, 3200); // Animation duration + stagger
+        });
+    </script>
+</body>
+</html>
